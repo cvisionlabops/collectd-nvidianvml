@@ -17,7 +17,7 @@ Create a config file `nvidianvml.conf` in `/etc/collect.d/`.
 </LoadPlugin>
 
 <Plugin python>
-  ModulePath "/usr/local/lib/python2.7/dist-packages/collectd-nvidianvml/nvidianvml.py"
+  ModulePath "/usr/local/lib/python2.7/dist-packages/collectd-nvidianvml/"
 
   # To output python traces in syslog, set 'true'
   LogTraces true
