@@ -30,3 +30,18 @@ Create a config file `nvidianvml.conf` in `/etc/collect.d/`.
 </Plugin>
 ```
 
+### Pipy
+
+> http://peterdowns.com/posts/first-time-with-pypi.html
+
+Do it once with new package:
+
+```bash
+python setup.py register -r pypi
+```
+
+To upload a new version you should run this (build and upload):
+
+```bash
+python setup.py sdist upload -r pypi
+```
