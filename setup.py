@@ -18,7 +18,7 @@ setup(
     name=root_pkg,
     description='CVISIONLAB OPS Collectd Python Plugin for NVIDIA GPU using nvml',
     long_description=open('README.txt').read(),
-    version='0.1.0',
+    version='0.1.1',
     author='Skubriev Vladimir',
     author_email='skubriev@cvisionlab.com',
     license='GPL',

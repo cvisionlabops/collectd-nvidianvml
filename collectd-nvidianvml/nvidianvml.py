@@ -10,7 +10,7 @@
 import collectd
 from pynvml import *
 
-#VERBOSE_LOGGING = False
+VERBOSE_LOGGING = False
 #VERBOSE_LOGGING = True
 
 def log_verbose(msg):
