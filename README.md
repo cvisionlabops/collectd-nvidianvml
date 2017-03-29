@@ -30,6 +30,22 @@ Create a config file `nvidianvml.conf` in `/etc/collect.d/`.
 </Plugin>
 ```
 
+### Note about debug collectd modules.
+
+On ubuntu I'am faced with problem: collectd doesn't log python module errors (python errors) to syslog.
+
+Solution
+
+```
+service collectd stop
+
+# See errors, fix it.
+collectd -f -C /etc/collectd.conf
+
+# And start collect again
+service collectd start
+```
+
 ### Pipy
 
 > http://peterdowns.com/posts/first-time-with-pypi.html
