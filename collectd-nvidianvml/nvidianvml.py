@@ -44,6 +44,11 @@ def dispatch_value(plugin_instance, info, key, type, type_instance=None):
     val.values = [value]
     val.dispatch()
 
+
+def getNvmlValue():
+    """Tried to extract value from nvml library, if library gets error returns 0"""
+    log_verbose('unable to extract value from nvml: %s' % (deviceCount)) 
+
 def read_callback():
     nvmlInit()
     deviceCount = nvmlDeviceGetCount()
@@ -54,16 +59,47 @@ def read_callback():
     for i in range(deviceCount):
         handle = nvmlDeviceGetHandleByIndex(i)
         plugin_instance='nvidia%s' % (i)
-        dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).total, 'total', 'memory')
-        dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).used, 'used', 'memory')
-        dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).total, 'free', 'memory')
 
-        dispatch_value(plugin_instance, nvmlDeviceGetPowerUsage(handle), 'powerusage', 'power')
-        dispatch_value(plugin_instance, nvmlDeviceGetTemperature(handle, NVML_TEMPERATURE_GPU), 'temp', 'temperature')
-        dispatch_value(plugin_instance, nvmlDeviceGetFanSpeed(handle), 'fanspeed', 'fanspeed')
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).total, 'total', 'memory')
+        except NVMLError_NotSupported:
+            pass
 
-        dispatch_value(plugin_instance, nvmlDeviceGetUtilizationRates(handle).gpu, 'util_gpu', 'percent')
-        dispatch_value(plugin_instance, nvmlDeviceGetUtilizationRates(handle).memory, 'util_memory', 'percent')
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).used, 'used', 'memory')
+        except NVMLError_NotSupported:
+            pass
+
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).free, 'free', 'memory')
+        except NVMLError_NotSupported:
+            pass
+
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetPowerUsage(handle), 'powerusage', 'power')
+        except NVMLError_NotSupported:
+            pass
+
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetTemperature(handle, NVML_TEMPERATURE_GPU), 'temp', 'temperature')
+        except NVMLError_NotSupported:
+            pass
+
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetFanSpeed(handle), 'fanspeed', 'fanspeed')
+        except NVMLError_NotSupported:
+            pass
+
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetUtilizationRates(handle).gpu, 'util_gpu', 'percent')
+        except NVMLError_NotSupported:
+            pass
+
+        try:
+            dispatch_value(plugin_instance, nvmlDeviceGetUtilizationRates(handle).memory, 'util_memory', 'percent')
+        except NVMLError_NotSupported:
+            pass
+
 
 collectd.register_config(configure_callback)
 collectd.register_read(read_callback)
