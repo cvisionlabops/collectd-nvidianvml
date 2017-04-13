@@ -71,7 +71,7 @@ def read_callback():
             pass
 
         try:
-            dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).total, 'free', 'memory')
+            dispatch_value(plugin_instance, nvmlDeviceGetMemoryInfo(handle).free, 'free', 'memory')
         except NVMLError_NotSupported:
             pass
 
