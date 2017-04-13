@@ -58,6 +58,8 @@ python setup.py register -r pypi
 
 To upload a new version you should run this (build and upload):
 
+> Don't forget to upgrade a version in setup.py file, and next run:
+
 ```bash
 python setup.py sdist upload -r pypi
 ```
